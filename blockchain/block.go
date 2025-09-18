@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"strconv"
+	"time"
 )
 
 type Block struct {
@@ -23,4 +24,18 @@ func (b *Block) calculateHash() []byte {
 
 	hash := sha256.Sum256(joinedInfo)
 	return hash[:]
+}
+
+func NewBlock(data []byte, prevBlockHash []byte) *Block {
+
+	block := &Block{
+		Data:          data,
+		PrevBlockHash: prevBlockHash,
+		Timestamp:     time.Now().Unix(),
+	}
+
+	block.Hash = block.calculateHash()
+
+	return block
+
 }
