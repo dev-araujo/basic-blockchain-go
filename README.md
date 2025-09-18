@@ -1,1 +1,1 @@
-# basic-blockchain-go
+# Basic blockchain go
