@@ -17,7 +17,7 @@ Este guia estabelece as convenções de código para projetos Go em nossa organi
 ### Nomenclatura
 - **Variáveis**: Use `camelCase` (ex: `userName`).
 - **Constantes**: Use `UpperCase` com underscores (ex: `MAX_CONNECTIONS`).
-- **Funções**: Use `camelCase` (ex: `calculateTotal()`).
+- **Funções**: Use `camelCase` em funções internas (ex: `calculateTotal()`) e PascalCase para funções que serão exportadas(ex: `CalculateTotal`).
 - **Interfaces**: Use `er` no final se apropriado (ex: `Reader`).
 - **Pacotes**: Nomes curtos e em minúsculas (ex: `util`).
 
