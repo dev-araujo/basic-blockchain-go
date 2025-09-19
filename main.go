@@ -43,7 +43,7 @@ if trimmedData == EXIT_COMMAND {
 
 func printInline(bc *blockchain.Blockchain) {
 	for _, block := range bc.Blocks {
-		fmt.Println("==============================")
+fmt.Println(BLOCK_SEPARATOR)
 		fmt.Printf("Index: %d\n", block.Index)
 		fmt.Printf("Timestamp: %d\n", block.Timestamp)
 		fmt.Printf("Data: %s\n", block.Data)
