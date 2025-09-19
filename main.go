@@ -20,7 +20,7 @@ func main() {
 		data, err := reader.ReadString('\n')
 		if err != nil {
 			if err == io.EOF {
-				fmt.Println("\n exit")
+fmt.Println(EXIT_MESSAGE)
 				break
 			}
 			fmt.Printf("error %v\n", err)
