@@ -5,8 +5,10 @@ type Blockchain struct {
 }
 
 func (bc *Blockchain) AddBlock(data []byte) {
-	size := uint64(len(bc.Blocks))
-	prev := bc.Blocks[size-1]
+    if len(bc.Blocks) == 0 {
+        panic("cannot add block to an empty chain")
+    }
+	prev := bc.Blocks[len(bc.Blocks)-1]
 
 	newBlock := NewBlock(data, prev.Hash)
 	newBlock.Index = prev.Index + 1
