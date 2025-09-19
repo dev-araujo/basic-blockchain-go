@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/dev-araujo/basic-blockchain-go/blockchain"
 )
@@ -14,22 +15,26 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
+		printInline(bc)
 		fmt.Println("enter the data for a new block: ")
 		data, err := reader.ReadString('\n')
 		if err != nil {
 			if err == io.EOF {
-				fmt.Println("\nA sair.")
+				fmt.Println("\n exit")
 				break
 			}
-			fmt.Printf("Erro ao ler a entrada: %v\n", err)
+			fmt.Printf("error %v\n", err)
 			break
 		}
 
-		if len(data) > 0 {
-			bc.AddBlock([]byte(data))
+		trimmedData := strings.TrimSpace(data)
+		if len(trimmedData) > 0 && trimmedData != "/exit" {
+			bc.AddBlock([]byte(trimmedData))
 			fmt.Println("====NEW===DATA==ADDED=========")
-			fmt.Println("==============================")
 			printInline(bc)
+		}
+		if trimmedData == "/exit" {
+			break
 		}
 
 	}
@@ -38,6 +43,7 @@ func main() {
 
 func printInline(bc *blockchain.Blockchain) {
 	for _, block := range bc.Blocks {
+		fmt.Println("==============================")
 		fmt.Printf("Index: %d\n", block.Index)
 		fmt.Printf("Timestamp: %d\n", block.Timestamp)
 		fmt.Printf("Data: %s\n", block.Data)
