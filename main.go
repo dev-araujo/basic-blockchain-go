@@ -10,6 +10,10 @@ import (
 	"github.com/dev-araujo/basic-blockchain-go/blockchain"
 )
 
+const EXIT_COMMAND = "/exit"
+const NEW_DATA_SEPARATOR = "------------------------------"
+const BLOCK_SEPARATOR = "=============================="
+
 func main() {
 	bc := blockchain.NewBlockchain()
 	reader := bufio.NewReader(os.Stdin)
@@ -20,7 +24,6 @@ func main() {
 		data, err := reader.ReadString('\n')
 		if err != nil {
 			if err == io.EOF {
-fmt.Println(EXIT_MESSAGE)
 				break
 			}
 			fmt.Printf("error %v\n", err)
@@ -28,7 +31,7 @@ fmt.Println(EXIT_MESSAGE)
 		}
 
 		trimmedData := strings.TrimSpace(data)
-if trimmedData == EXIT_COMMAND {
+		if trimmedData == EXIT_COMMAND {
 			break
 		}
 		if len(trimmedData) > 0 {
@@ -43,7 +46,7 @@ if trimmedData == EXIT_COMMAND {
 
 func printInline(bc *blockchain.Blockchain) {
 	for _, block := range bc.Blocks {
-fmt.Println(BLOCK_SEPARATOR)
+		fmt.Println(BLOCK_SEPARATOR)
 		fmt.Printf("Index: %d\n", block.Index)
 		fmt.Printf("Timestamp: %d\n", block.Timestamp)
 		fmt.Printf("Data: %s\n", block.Data)
