@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
+	"strings"
 
 	"github.com/dev-araujo/basic-blockchain-go/blockchain"
 )
@@ -13,14 +15,27 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
+		printInline(bc)
 		fmt.Println("enter the data for a new block: ")
-		line, err := reader.ReadString('\n')
+		data, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println("error", err)
+			if err == io.EOF {
+fmt.Println(EXIT_MESSAGE)
+				break
+			}
+			fmt.Printf("error %v\n", err)
+			break
 		}
 
-		bc.AddBlock([]byte(line))
-		printInline(bc)
+		trimmedData := strings.TrimSpace(data)
+if trimmedData == EXIT_COMMAND {
+			break
+		}
+		if len(trimmedData) > 0 {
+			bc.AddBlock([]byte(trimmedData))
+			fmt.Println(NEW_DATA_SEPARATOR)
+			printInline(bc)
+		}
 
 	}
 
@@ -28,6 +43,7 @@ func main() {
 
 func printInline(bc *blockchain.Blockchain) {
 	for _, block := range bc.Blocks {
+fmt.Println(BLOCK_SEPARATOR)
 		fmt.Printf("Index: %d\n", block.Index)
 		fmt.Printf("Timestamp: %d\n", block.Timestamp)
 		fmt.Printf("Data: %s\n", block.Data)
