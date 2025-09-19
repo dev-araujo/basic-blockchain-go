@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/dev-araujo/basic-blockchain-go/blockchain"
@@ -14,13 +15,22 @@ func main() {
 
 	for {
 		fmt.Println("enter the data for a new block: ")
-		line, err := reader.ReadString('\n')
+		data, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println("error", err)
+			if err == io.EOF {
+				fmt.Println("\nA sair.")
+				break
+			}
+			fmt.Printf("Erro ao ler a entrada: %v\n", err)
+			break
 		}
 
-		bc.AddBlock([]byte(line))
-		printInline(bc)
+		if len(data) > 0 {
+			bc.AddBlock([]byte(data))
+			fmt.Println("====NEW===DATA==ADDED=========")
+			fmt.Println("==============================")
+			printInline(bc)
+		}
 
 	}
 
