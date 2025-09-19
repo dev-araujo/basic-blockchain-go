@@ -28,13 +28,13 @@ func main() {
 		}
 
 		trimmedData := strings.TrimSpace(data)
-		if len(trimmedData) > 0 && trimmedData != "/exit" {
-			bc.AddBlock([]byte(trimmedData))
-			fmt.Println("====NEW===DATA==ADDED=========")
-			printInline(bc)
-		}
-		if trimmedData == "/exit" {
+if trimmedData == EXIT_COMMAND {
 			break
+		}
+		if len(trimmedData) > 0 {
+			bc.AddBlock([]byte(trimmedData))
+			fmt.Println(NEW_DATA_SEPARATOR)
+			printInline(bc)
 		}
 
 	}
